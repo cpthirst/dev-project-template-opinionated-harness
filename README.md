@@ -246,9 +246,9 @@ Then:
 3. **GitHub settings:**
    - **Actions → General**: allow GitHub Actions to create pull requests (release-please needs this).
    - **General → Pull requests**: squash merging only, with "Pull request title" as the default commit message.
-   - **Rules**: add a ruleset for `main`, as this repo has. Rulesets are enforced on public repos, or on private ones with GitHub Pro. The ruleset should:
+   - **Rules**: add a ruleset for `main`, mirroring this repo's own. Rulesets are enforced on public repos, or on private ones with GitHub Pro. The ruleset should:
      - require a pull request (0 approvals, squash only) and linear history;
      - require the `check` and `commitlint` status checks, with the branch up to date;
      - block force-pushes and deletion;
-     - let the **Repository admin** role bypass it, **for pull requests only**. Release PRs skip CI and the title check by design (ADR 0004), so without this bypass they could never be merged. Admins still can't push to `main` directly.
+     - let the **Repository admin** role bypass it, in **pull-requests-only** mode (so admins still can't push to `main` directly). Release PRs run neither required check: CI ignores `release-please--*` branches, and GitHub doesn't start the title check for PRs created with `GITHUB_TOKEN` (ADR 0004). Without the bypass, release PRs would wait for those checks forever.
 4. **Start the first feature** with the `write-prd` skill.
